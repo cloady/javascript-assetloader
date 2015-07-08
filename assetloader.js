@@ -1,3 +1,15 @@
+/**
+ * @component AssetLoader
+ * @description Javascript asset loader
+ * @param assets (array) Assets array
+ * @param options (object) Configuration object (reduce: true/false)
+ * @return Promise object
+ * 
+ * Example:
+ * 
+ * new AssetLoader([ 'img1.jpg', 'img2.jpg' ], {reduce: true}).then(function() { alert('images loaded!'); });
+ */
+
 (function() {
 	var ImageAsset = function(src) {
 		return new Promise(function(resolve, reject) {
