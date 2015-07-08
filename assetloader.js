@@ -16,29 +16,44 @@
 		return new Promise(function(resolve, reject) {
 			var el = document.createElement(options.type || 'img');
 			el.setAttribute(options.attr || 'src', src);
-			el.addEventListener(options.load, function() {
+			el.addEventListener(options.load || 'load', function() {
 				resolve(this);
 			});
-			el.addEventListener(options.error,function() {
+			el.addEventListener(options.error || 'error',function() {
 				reject(this);
 			});
 		});
 	};
 	
 	this.AssetLoader = function(assets, options) {
+		var elems=[];
 		(!options) && (options={});
 		
 		if (!options.seq)
-			return Promise.all(
+			result = Promise.all(
 				assets.map(function(v) {
 					return new Asset(v, options);
 				})
 			);
 		else
-			return assets.reduce(function(last, url) {
-				return last.then(function() {
-					return new Asset(url, options);
-				});
-			}, Promise.resolve())
+			return new Promise(
+				function(resolve, reject) {
+					(assets.reduce(function(last, url) {
+						return last.then(function(el) {
+							(el) && (elems.push(el));
+							return new Asset(url, options);
+						});
+					}, Promise.resolve())).then(
+						function(el) {
+							elems.push(el);
+							resolve(elems);
+						},
+						function(el) {
+							elems.push(el);
+							reject(elems);
+						}
+					)
+				}
+			);
 	};
 }).call(this);
