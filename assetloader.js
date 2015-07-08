@@ -1,5 +1,5 @@
 /**
- * @component AssetLoader
+ * @class AssetLoader
  * @description Javascript asset loader
  * @param assets (array) Assets array
  * @param options (object) Configuration object (reduce: true/false)
