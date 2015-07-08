@@ -8,32 +8,25 @@
  * Example:
  * 
  * new AssetLoader([ 'img1.jpg', 'img2.jpg' ], {type: 'img', reduce: true}).then(function() { alert('images loaded!'); });
- * new AssetLoader([ 'script1.js', 'script2.js' ], {type: 'script'}).then(function() { alert('script loaded!'); });
  * new AssetLoader([ 'audio1.ogg', 'audio2.mp3' ], {type: 'audio', load: 'loadeddata'}).then(function() { alert('audio loaded!'); });
- * new AssetLoader([ 'style1.css', 'style2.css' ], {type: 'link', attr: 'href', async: false});
  */
 
 (function() {
 	var Asset = function(src, options) {
 		return new Promise(function(resolve, reject) {
-			var el = document.createElement(options.type);
-			el.setAttribute(options.attr, src);
-			if (options.async) {
-				el.addEventListener(options.load, function() {
-					resolve(this);
-				});
-				el.addEventListener(options.error,function() {
-					reject(this);
-				});
-			}
-			else { 
-				resolve(el);
-			}
+			var el = document.createElement(options.type || 'img');
+			el.setAttribute(options.attr || 'src', src);
+			el.addEventListener(options.load, function() {
+				resolve(this);
+			});
+			el.addEventListener(options.error,function() {
+				reject(this);
+			});
 		});
 	};
 	
 	this.AssetLoader = function(assets, options) {
-		(!options) && (options={type: 'img', attr: 'src', async: true, attrs: [], load: 'load', error: 'error', reduce: false});
+		(!options) && (options={});
 		
 		if (!options.reduce)
 			return Promise.all(
