@@ -2,12 +2,12 @@
  * @class AssetLoader
  * @description Javascript asset loader
  * @param assets (array) Assets array
- * @param options (object) Configuration object (reduce: true/false)
+ * @param options (object) Configuration object (seq: true/false)
  * @return Promise object
  * 
  * Example:
  * 
- * new AssetLoader([ 'img1.jpg', 'img2.jpg' ], {type: 'img', reduce: true}).then(function() { alert('images loaded!'); });
+ * new AssetLoader([ 'img1.jpg', 'img2.jpg' ], {type: 'img', seq: true}).then(function() { alert('images loaded!'); });
  * new AssetLoader([ 'audio1.ogg', 'audio2.mp3' ], {type: 'audio', load: 'loadeddata'}).then(function() { alert('audio loaded!'); });
  */
 
@@ -28,7 +28,7 @@
 	this.AssetLoader = function(assets, options) {
 		(!options) && (options={});
 		
-		if (!options.reduce)
+		if (!options.seq)
 			return Promise.all(
 				assets.map(function(v) {
 					return new Asset(v, options);
