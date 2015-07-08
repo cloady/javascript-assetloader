@@ -1,3 +1,3 @@
 # javascript-assetloader
-Javascript Images Asset Loading
+Javascript Images Asset Loading using Javascript Promises.
 
