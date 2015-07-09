@@ -40,7 +40,7 @@
 				function(resolve, reject) {
 					(assets.reduce(function(last, url) {
 						return last.then(function(el) {
-							(el) && (elems.push(el));
+							(arguments.length) && (elems.push(el));
 							return new Asset(url, options);
 						});
 					}, Promise.resolve())).then(
